@@ -1,0 +1,88 @@
+#include <cstdio>
+#include <cmath>
+#include <cstring>
+#include <cstdlib>
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <list>
+#include <stack>
+#include <utility>
+#include <set>
+#include <ctime>
+#include <string>
+#include <map>
+#include <vector>
+using namespace std;
+long long int tree[100001*3];
+long long int lazy[100001*3];
+void update(int node,int b,int e,int i,int j,int value)
+{
+    if(i>e||j<b)return;
+    if(b>=i&&e<=j)
+    {
+        lazy[node]+=value;
+        return;
+    }
+    else
+    {
+        tree[node]+=(min(e,j)-max(b,i)+1)*value;
+        update(node*2,b,(b+e)/2,i,j,value);
+        update(node*2+1,(b+e)/2+1,e,i,j,value);
+    }
+
+}
+long long int query(int node,int b,int e,int i,int j)
+{
+    if(i>e||j<b)return 0;
+    else
+    {
+        tree[node]+=lazy[node]*(e-b+1);
+        if(b!=e)
+        {
+            lazy[node*2]+=lazy[node];
+            lazy[node*2+1]+=lazy[node];
+        }
+        lazy[node]=0;
+        if(b>=i&&e<=j)return tree[node];
+        else return query(node*2,b,(b+e)/2,i,j)+query(node*2+1,(b+e)/2+1,e,i,j);
+
+    }
+
+
+}
+
+
+int main()
+{
+    int tc,n,m,x,y,z,c;
+    long long int sum;
+    scanf("%d",&tc);
+    for(int t=1; t<=tc; t++)
+    {
+
+        memset(tree,0,sizeof(tree));
+        memset(lazy,0,sizeof(lazy));
+        scanf("%d%d",&n,&m);
+        printf("Case %d:\n",t);
+        for(int i=1; i<=m; i++)
+        {
+            scanf("%d",&c);
+            if(c==0)
+            {
+                scanf("%d%d%d",&x,&y,&z);
+                update(1,0,n-1,x,y,z);
+            }
+            else if(c==1)
+            {
+                scanf("%d%d",&x,&y);
+                sum=query(1,0,n-1,x,y);
+                printf("%lld\n",sum);
+            }
+        }
+
+    }
+
+
+    return 0;
+}
