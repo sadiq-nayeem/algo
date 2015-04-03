@@ -100,12 +100,32 @@ typedef pair<ll,ll  >P;
 ////////define value//////////
 #define mx 999999999999999ll
 ll n,m;
-ll a[504];
+ll a[504], k;
 ll vis[504][504];
-void hishab(ll s,ll e)
+void hishab(ll s,ll e,ll x,ll y)
 {
+    if(s>e)
+    {
+        return;
+    }
     ll mid=(s+e)/2;
-
+    ll fl=0;
+    ll  ret=mx;
+    for(ll i=x; i<=min(mid-1,y); i++)
+    {
+        ll op=a[mid]-a[i];
+        ll op1=mid-i-op;
+        ll res=op*op1+vis[k][i];
+        if(res<ret)
+        {
+            ret=res;
+            fl=i;
+        }
+    }
+   // cout<<mid<<endl;
+    vis[k+1][mid]=ret;
+    hishab(s,mid-1,x,fl);
+    hishab(mid+1,e,fl,y);
 }
 int main()
 {
@@ -117,16 +137,21 @@ int main()
         S(x);
         a[i]=x+a[i-1];
     }
-    SETR(vis);
-    for(ll i=1;i<=n;i++)
+    SET(vis);
+    for(ll i=1; i<=n; i++)
     {
         ll op=a[i];
-        ll op1=n-a[i];
+        ll op1=i-a[i];
         vis[1][i]=op*op1;
     }
-    for(ll j=2;j<=m;j++)
+    for(ll j=2; j<=m; j++)
     {
-
+        k=j-1;
+        hishab(1,n,1,n);
     }
+    ll res=mx;
+   // for(ll i=1;i<n;i++)res=min(res,vis[m-1][i]);
+   res=vis[m][n];
+    P(res);
     return 0;
 }
