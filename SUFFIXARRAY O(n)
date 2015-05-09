@@ -1,0 +1,69 @@
+
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+#include <cstring>
+#include <string>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+#define MAXN 300011
+
+int _wa[MAXN], _wb[MAXN], _wv[MAXN], _ws[MAXN];
+
+int _cmp(int *r, int a, int b, int l)
+{
+    return r[a] == r[b] && r[a + l] == r[b + l];
+}
+void Get_Sa(int *r, int *sa, int n, int m)
+{
+    int i, j, p, *x = _wa, *y = _wb, *t;
+    for(i = 0; i < m; i++) _ws[i] = 0;
+    for(i = 0; i < n; i++) _ws[x[i] = r[i]]++;
+    for(i = 1; i < m; i++) _ws[i] += _ws[i - 1];
+    for(i = n - 1; i >= 0; i--) sa[--_ws[x[i]]] = i;
+    for(j = 1, p = 1; p < n; j <<= 1, m = p)
+    {
+        for(p = 0, i = n - j; i < n; i++) y[p++] = i;
+        for(i = 0; i < n; i++) if(sa[i] >= j) y[p++] = sa[i] - j;
+        for(i = 0; i < n; i++) _wv[i] = x[y[i]];
+        for(i = 0; i < m; i++) _ws[i] = 0;
+        for(i = 0; i < n; i++) _ws[_wv[i]]++;
+        for(i = 1; i < m; i++) _ws[i] += _ws[i - 1];
+        for(i = n - 1; i >= 0; i--) sa[--_ws[_wv[i]]] = y[i];
+        for(t = x, x = y, y = t, p = 1, x[sa[0]] = 0, i = 1; i < n; i++)
+            x[sa[i]] = _cmp(y, sa[i - 1], sa[i], j) ? p - 1 : p++;
+    }
+}
+
+int rnk[MAXN], ht[MAXN];
+void Get_H(int *r, int *sa, int n)
+{
+    int i, j, k = 0;
+    for(i = 0; i <= n; i++) rnk[sa[i]] = i;
+    for(i = 0; i < n; ht[rnk[i++]] = k)
+        for(k ? k-- : 0, j = sa[rnk[i] - 1]; r[i + k] == r[j + k]; k++);
+}
+
+int n;
+int pr[MAXN], sa[MAXN];
+char ch[200004];
+int main()
+{
+    scanf("%s",ch+1);
+    n=strlen(ch+1);
+    for(int i=0; i<n; i++)pr[i]=ch[i]-64;
+    pr[n]=0;///fill the last index with zerro
+    Get_Sa(pr,sa,n+1,30);///always n+1//Here 30 means only capital letters will be used so only 26
+    Get_H(pr,sa,n);
+    ///sa gives the sorted suffix indexes
+    ///height gives the LCP of id && id-1
+    ///here rank said in which position a suffix is situated//in the sorted suffix list.
+    ///sa[0] er index and sa[1] er index er lcp thakbe h[1] e
+
+
+    return 0;
+}
