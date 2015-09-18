@@ -18,8 +18,8 @@
 #define L(a) scanf("%lld",&a)
 #define L2(a,b) scanf("%lld%lld",&a,&b)
 #define L3(a,b,c) scanf("%lld%lld%lld",&a,&b,&c)
-#define PL(a) printf("%d\n",a)
-#define P(a) printf("%lld\n",a)
+#define P(a) printf("%d\n",a)
+#define PI(a) printf("%lld\n",a)
 #define PT(t) printf("Case %d: ",t)
 #define FL(I1,a,b) for(int I1=a;I1<=b;I1++)
 #define FLR(I2,a,b) for(int I2=a;I2>=b;I2--)
@@ -117,11 +117,6 @@ typedef vector<ll>V;
 ////////define value/////
 int main()
 {
-    
-    int tc;
-    
-    
-    
     
     
     
