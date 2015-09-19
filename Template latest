@@ -8,7 +8,6 @@
 ********************************/
 #include<bits/stdc++.h>
 #include<string.h>
-#define I int
 #define ll long long int
 #define ull unsigned long long int
 #define D double
@@ -19,7 +18,7 @@
 #define L2(a,b) scanf("%lld%lld",&a,&b)
 #define L3(a,b,c) scanf("%lld%lld%lld",&a,&b,&c)
 #define P(a) printf("%d\n",a)
-#define PI(a) printf("%lld\n",a)
+#define PL(a) printf("%lld\n",a)
 #define PT(t) printf("Case %d: ",t)
 #define FL(I1,a,b) for(int I1=a;I1<=b;I1++)
 #define FLR(I2,a,b) for(int I2=a;I2>=b;I2--)
@@ -109,7 +108,7 @@ template<typename T> T in()
     }
     return (ng?-n:n);
 }
-#define mx 100004
+#define mx 50004
 #define md 2000000000000000000ll
 typedef pair<int, int >P;
 typedef vector<ll>V;
@@ -117,8 +116,9 @@ typedef vector<ll>V;
 ////////define value/////
 int main()
 {
-    
-    
-    
+
+
+
+
     return 0;
 }
