@@ -1,4 +1,4 @@
-
+http://poj.org/problem?id=3974
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -9,8 +9,9 @@
 #include <algorithm>
 
 using namespace std;
+#define SET(a) memset(a,0,sizeof a)
 
-#define MAXN 300011
+#define MAXN 2000011
 
 int _wa[MAXN], _wb[MAXN], _wv[MAXN], _ws[MAXN];
 
@@ -50,20 +51,61 @@ void Get_H(int *r, int *sa, int n)
 
 int n;
 int pr[MAXN], sa[MAXN];
-char ch[200004];
+char ch[2000004];
 int main()
 {
-    scanf("%s",ch+1);
-    n=strlen(ch+1);
-    for(int i=0; i<n; i++)pr[i]=ch[i]-64;
-    pr[n]=0;///fill the last index with zerro
-    Get_Sa(pr,sa,n+1,30);///always n+1//Here 30 means only capital letters will be used so only 26
-    Get_H(pr,sa,n);
-    ///sa gives the sorted suffix indexes
-    ///height gives the LCP of id && id-1
-    ///here rank said in which position a suffix is situated//in the sorted suffix list.
-    ///sa[0] er index and sa[1] er index er lcp thakbe h[1] e
-
-
+    int cs = 0;
+    while(scanf("%s", ch))
+    {
+        if(!strcmp(ch, "END"))break;
+        SET(_wb);
+        SET(_wv);
+        SET(_ws);
+        SET(_wa);
+        SET(sa);
+        SET(pr);
+        SET(ht);
+        SET(rnk);
+        int   n1 = strlen(ch);
+        n = n1;
+        ch[n] = 123;
+        n++;
+        for(int i = n1 - 1; i >= 0; i--)
+        {
+            ch[n] = ch[i];
+            n++;
+        }
+        ch[n] = '\0';
+        n = strlen(ch);
+        for(int i = 0; i < n; i++)pr[i] = ch[i] - 96;
+        pr[n] = 0; //fill the last index with zerro
+        Get_Sa(pr, sa, n + 1, 30); //always n+1//Here 30 means only capital letters will be used so only 26
+        Get_H(pr, sa, n);
+        //sa gives the sorted suffix indexes
+        //height gives the LCP of id && id-1
+        //here rank said in which position a suffix is situated//in the sorted suffix list.
+        //sa[0] er index and sa[1] er index er lcp thakbe h[1] e
+        //for(int i = 0; i < n; i++)
+        //cout << sa[i] << " " << ht[i] << endl;
+        int res = 0;
+        for(int i = 1; i < n; i++)
+        {
+            int xo = sa[i];
+            int ho = sa[i - 1];
+            if(xo > ho)swap(xo, ho);
+            int bol = ht[i];
+            if(ho >= n1 && xo < n1)
+            {
+                int ho2 = n - ho ;
+                int ho1 = n1 - xo;
+                ho2= min(ho2, ho1);
+                res = max(res, min(bol, ho2));
+            }
+        }
+        printf("Case %d: ", ++cs);
+        printf("%d\n", res);
+        ch[0]='\0';
+    }
     return 0;
 }
+
