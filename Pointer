@@ -1,0 +1,28 @@
+
+//Only when we declare something pointer
+int *p;
+node *q
+
+int var=300;
+//To copy address use
+p=&var;
+to copy value;
+*p=*q;
+
+
+
+    int *p;
+    int var=300;
+    int *q;
+
+    q=&var;
+    int co=300;
+    p=&co;
+  //  PI(p);
+  to copy something it should be sure that p point a address and q point a adrees ;
+  if they are null we can,t copy address or value;
+  
+  we can not write p=q for copy value cz both adress will be same !:
+    *p=*q;
+    PI(p);
+    
